@@ -3,7 +3,7 @@
  * Registers 3 agent tools for AutoFlow workflow automation
  */
 
-const DEFAULT_BASE_URL = "http://localhost:8000";
+const DEFAULT_BASE_URL = "http://localhost:3001";
 
 /**
  * HTTP request helper for AutoFlow API
