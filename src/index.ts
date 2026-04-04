@@ -12,7 +12,7 @@ async function apiRequest(
   baseUrl: string,
   method: string,
   path: string,
-  body?: object
+  body?: object,
 ): Promise<unknown> {
   const url = `${baseUrl}${path}`;
   const options: RequestInit = {
