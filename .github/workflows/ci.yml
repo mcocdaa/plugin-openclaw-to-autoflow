@@ -24,7 +24,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: "24"
 
       - name: Validate JSON manifests
         run: |
@@ -53,15 +53,12 @@ jobs:
       - name: Validate src/index.ts syntax & tool registration
         run: |
           node --experimental-strip-types -e '
+            import assert from "node:assert/strict";
             import("./src/index.ts").then((mod) => {
-              if (typeof mod.default !== "function") {
-                throw new Error("Expected default export function in src/index.ts");
-              }
+              assert.equal(typeof mod.default, "function", "Expected default export function in src/index.ts");
               const tools = [];
               mod.default({ registerTool: (t) => tools.push(t.name) });
-              if (tools.length === 0) {
-                throw new Error("No tools registered by plugin entry");
-              }
+              assert.deepEqual(tools, ["autoflow_run", "autoflow_list", "autoflow_plugins"]);
               console.log("Plugin entry OK, tools:", tools);
             }).catch((err) => {
               console.error(err);
